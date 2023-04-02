@@ -47,7 +47,7 @@ class Handler extends ExceptionHandler
      */
     public function register()
     {
-        $this->renderable(function (\Exception $e) {
+        $this->reportable(function (\Exception $e) {
             //Here we should handle each type of the well-known exception separately
             //The code was simplified to save time
             $message = $e->getMessage();

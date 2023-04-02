@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Enum\RolesEnum;
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class UsersSeeder extends Seeder
@@ -15,10 +15,13 @@ class UsersSeeder extends Seeder
      */
     public function run()
     {
-        User::query()->firstOrCreate([
+        /** @var User $admin */
+        $admin = User::query()->firstOrCreate([
             'name' => 'admin'
-        ],[
+        ], [
             'password' => '12345'
         ]);
+
+        $admin->syncRoles(RolesEnum::Admin->value);
     }
 }

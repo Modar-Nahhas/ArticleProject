@@ -26,8 +26,8 @@ class AuthController extends Controller
             $response = [
                 'user' => $user,
                 'access_token' => $token,
-                'role' => $user->roles()->first(),
-                'permissions' => $user->permissions
+                'role' => $user->getRole(),
+                'permissions' => $user->getPermissions()
             ];
             $message = "Success";
             $result = true;

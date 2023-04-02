@@ -18,6 +18,7 @@ class RolesPermissionsSeeder extends Seeder
      */
     public function run()
     {
+        app()->make(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
         $adminRole = Role::query()->firstOrCreate([
             'name' => RolesEnum::Admin->value,
             'guard_name' => 'api',

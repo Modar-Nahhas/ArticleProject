@@ -10,6 +10,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\HasApiTokens;
 use Mapi\Easyapi\Models\ApiUser;
+use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends ApiUser
@@ -32,7 +33,7 @@ class User extends ApiUser
      * @var array<int, string>
      */
     protected $hidden = [
-        'password',
+        'password', 'roles', 'permissions'
     ];
 
     protected $allowedFilters = [
@@ -54,5 +55,17 @@ class User extends ApiUser
     public function isAdmin(): bool
     {
         return $this->hasRole('admin');
+    }
+
+    public function getRole(): string
+    {
+        $role = $this->roles()->first(['id', 'name']);
+        return $role?->name;
+    }
+
+    public function getPermissions(): array
+    {
+//        return $this->getAllPermissions()->map->only(['id','name'])->values()->toArray();
+        return $this->getAllPermissions()->pluck('name')->toArray();
     }
 }
